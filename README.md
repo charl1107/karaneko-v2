@@ -1,1 +1,3 @@
-Updated README with latest improvements
+## Karaneko v2 - Karaoke App
+
+**Status: Actively improved**
