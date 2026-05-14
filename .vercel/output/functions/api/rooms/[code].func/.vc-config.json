@@ -1,0 +1,18 @@
+{
+  "runtime": "edge",
+  "name": "api/rooms/[code]",
+  "deploymentTarget": "v8-worker",
+  "entrypoint": "index.js",
+  "assets": [],
+  "framework": {
+    "slug": "nextjs",
+    "version": "15.5.2"
+  },
+  "environment": {
+    "__NEXT_BUILD_ID": "HUuET4mtWXTY-xY5WvuLB",
+    "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "QaaKhEEaYjrUVbw+ir6OflpgupB1qJGjBWqbKk35njw=",
+    "__NEXT_PREVIEW_MODE_ID": "f51299a071965eb4e080f7eef6ddf40c",
+    "__NEXT_PREVIEW_MODE_SIGNING_KEY": "118554cb0c1455c2f469a68cdf67169b8d1e7eb40879d28ef368b41f07c7cfd4",
+    "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "60ba9542dd0e7779013c00f207fd5edefdd8edd50968a00d21408ae262fa7180"
+  }
+}

@@ -1,0 +1,22 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Next.js build output
+/.next/
+/out/
+
+# Production build
+/build
+
+# Environment variables and secrets
+.env
+.env.local
+.env*.local
+.dev.vars
+.wrangler/
+
+# Debug logs and system files
+npm-debug.log*
+.DS_Store

@@ -1,0 +1,42 @@
+{
+  "name": "karaneko",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:local": "node scripts/dev-local.cjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "pages:deploy": "npx wrangler pages deploy",
+    "deploy": "npm run pages:build && npm run pages:deploy",
+    "db:create": "wrangler d1 create karaneko-db",
+    "db:migrate": "wrangler d1 execute karaneko-db --file=./d1/schema.sql",
+    "db:migrate:local": "wrangler d1 execute karaneko-db --local --file=./d1/schema.sql",
+    "db:admin": "wrangler d1 execute karaneko-db --command=\"UPDATE users SET role=\"admin\" WHERE username=\"YOUR_USERNAME\"\"",
+    "db:seed": "wrangler d1 execute karaneko-db --file=./d1/schema.sql",
+    "db:seed:local": "wrangler d1 execute karaneko-db --local --file=./d1/schema.sql"
+  },
+  "dependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
+    "@types/qrcode": "^1.5.6",
+    "jose": "^6.2.3",
+    "lucide-react": "^1.14.0",
+    "next": "15.5.2",
+    "qrcode": "^1.5.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "react-qr-code": "^2.0.21"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

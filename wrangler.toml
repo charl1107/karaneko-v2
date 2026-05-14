@@ -1,0 +1,27 @@
+# ============================================================
+# Karaneko — Cloudflare Wrangler Configuration
+# ============================================================
+
+name = "karaneko"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+# ── D1 Database ──────────────────────────────────────────────
+# 1. Run: wrangler d1 create karaneko-db
+# 2. Copy the database_id from the output and paste below
+[[d1_databases]]
+binding = "DB"
+database_name = "karaneko-db"
+database_id = "9df74f1f-2a87-4b7d-b96c-abfc6d950915"
+
+# ── Secrets (DO NOT put values here) ─────────────────────────
+# Set secrets via CLI:
+#   wrangler pages secret put YOUTUBE_API_KEY --project-name karaneko
+#   wrangler pages secret put JWT_SECRET --project-name karaneko
+#   wrangler pages secret put RESEND_API_KEY --project-name karaneko
+
+# ── Local Dev Bindings ────────────────────────────────────────
+# These are used automatically by: npm run dev:local
+[dev]
+port = 3000
