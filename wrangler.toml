@@ -13,7 +13,7 @@ pages_build_output_dir = ".vercel/output/static"
 [[d1_databases]]
 binding = "DB"
 database_name = "karaneko-db"
-database_id = "9df74f1f-2a87-4b7d-b96c-abfc6d950915"
+database_id = "Your_database_ID"
 
 # ── Secrets (DO NOT put values here) ─────────────────────────
 # Set secrets via CLI:
