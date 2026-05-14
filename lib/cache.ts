@@ -1,33 +1,38 @@
 // lib/cache.ts
+import { unstable_cache } from 'next/cache';
 
+export const CACHE_TAGS = {
+  trending: 'trending-songs',
+  leaderboard: 'leaderboard',
+  search: 'youtube-search',
+  lyrics: 'song-lyrics',
+  rooms: 'active-rooms',
+} as const;
+
+/**
+ * Cached fetch with Next.js unstable_cache + Cloudflare compatibility
+ */
 export async function cachedFetch<T>(
   cacheKey: string,
   fetchFn: () => Promise<T>,
-  ttlSeconds: number = 600 // 10 minutes default
+  revalidateSeconds: number = 300, // 5 minutes default
+  tags: string[] = []
 ): Promise<T> {
-  const cache = caches.default;
-  const url = new URL(`https://cache.karaneko/${cacheKey}`);
-  const request = new Request(url.toString());
-
-  let response = await cache.match(request);
-
-  if (response) {
-    return response.json();
-  }
-
-  const data = await fetchFn();
-
-  response = new Response(JSON.stringify(data), {
-    headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': `max-age=${ttlSeconds}`,
-    },
-  });
-
-  // Cache in background
-  if (typeof context !== 'undefined' && context.waitUntil) {
-    context.waitUntil(cache.put(request, response.clone()));
-  }
-
-  return data;
+  return unstable_cache(
+    fetchFn,
+    [cacheKey],
+    {
+      revalidate: revalidateSeconds,
+      tags: [...tags, cacheKey],
+    }
+  )();
 }
+
+/** Common cache configurations */
+export const CACHE_TIMES = {
+  search: 180,        // 3 minutes
+  lyrics: 3600,       // 1 hour
+  trending: 60,       // 1 minute
+  leaderboard: 30,    // 30 seconds
+  rooms: 15,          // 15 seconds (more dynamic)
+} as const;
