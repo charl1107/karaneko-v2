@@ -1,15 +1,19 @@
-// Resend API - works on Cloudflare Workers edge runtime
-// Sign up free at resend.com → get API key → wrangler secret put RESEND_API_KEY
+// lib/email.ts
+// Resend API - Works on Cloudflare Workers edge runtime
 
 export async function sendVerificationEmail(
   to: string,
   username: string,
   code: string
 ): Promise<{ success: boolean; error?: string }> {
+  
   const apiKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.RESEND_FROM_EMAIL || "Karaneko <onboarding@resend.dev>";
+  
+  // Recommended for users without custom domain
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "Karaneko <karaneko@resend.dev>";
+
   if (!apiKey) {
-    console.error("RESEND_API_KEY not set");
+    console.error("RESEND_API_KEY is not set");
     return { success: false, error: "Email service not configured" };
   }
 
@@ -22,7 +26,7 @@ export async function sendVerificationEmail(
 </head>
 <body style="margin:0;padding:0;background:#0a0a0f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
   <div style="max-width:480px;margin:40px auto;background:#1a1a26;border-radius:16px;overflow:hidden;border:1px solid rgba(124,58,237,0.3);">
-    
+   
     <!-- Header -->
     <div style="background:linear-gradient(135deg,#7c3aed,#a855f7);padding:32px;text-align:center;">
       <div style="font-size:32px;margin-bottom:8px;">🎤</div>
@@ -52,7 +56,7 @@ export async function sendVerificationEmail(
 
     <!-- Footer -->
     <div style="padding:16px 32px;border-top:1px solid rgba(255,255,255,0.06);text-align:center;">
-      <p style="color:#404060;font-size:11px;margin:0;">© Karaneko · Sing Your Heart Out</p>
+      <p style="color:#404060;font-size:11px;margin:0;">© Karaneko • Sing Your Heart Out</p>
     </div>
   </div>
 </body>
@@ -74,25 +78,30 @@ export async function sendVerificationEmail(
     });
 
     if (!res.ok) {
-      const err = await res.json() as { message?: string };
+      const err = await res.json().catch(() => ({})) as { message?: string };
       const message = err.message || "Failed to send email";
+
+      console.error("Resend API error:", message);
+
+      // Helpful message for sandbox users
       if (message.includes("verify a domain") || message.includes("own email address")) {
         return {
           success: false,
-          error: `${message} Set RESEND_FROM_EMAIL to an address on your verified Resend domain, or test only with the Resend account email until the domain is verified.`,
+          error: "Resend requires a verified domain or using @resend.dev address. Make sure RESEND_FROM_EMAIL is set to 'Karaneko <karaneko@resend.dev>'",
         };
       }
+
       return { success: false, error: message };
     }
 
     return { success: true };
   } catch (err) {
     console.error("Email send error:", err);
-    return { success: false, error: "Network error sending email" };
+    return { success: false, error: "Failed to send verification email" };
   }
 }
 
-// Generate a 6-digit numeric code
+// Generate 6-digit verification code
 export function generateVerificationCode(): string {
   const arr = new Uint32Array(1);
   crypto.getRandomValues(arr);
