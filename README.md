@@ -1,34 +1,18 @@
 # Karaneko v2
 
-A modern karaoke singing app with real-time scoring, party KTV mode, and phone remote control.
+A modern karaoke singing app with real-time voice scoring, lyrics sync, and party KTV mode.
 
 ## ✨ Features
-
-- YouTube-based karaoke with synced lyrics
-- Real-time pitch detection and scoring (S/A/B/C/D ranks)
-- Solo + Party KTV mode (Big screen + Phone controller)
-- Email verification with Resend (free tier supported)
-- Secure admin login with secret suffix
-- Rate limiting & caching
-- About, Privacy, Terms of Service, and Contact pages
+- YouTube karaoke with synced lyrics
+- Real-time pitch detection & scoring (S/A/B/C/D ranks)
+- Party Mode with phone remote control
+- Secure authentication with email verification
+- Admin panel with special login
+- About, Privacy, Terms, Contact pages
 
 ## Admin Login
-
-To login as admin:
-1. Set `ADMIN_SECRET` in Cloudflare
-2. Use your admin username
-3. Password = `yournormalpassword` + `ADMIN_SECRET`
-
-## New Pages
-- `/about` - About the project
-- `/privacy` - Privacy Policy
-- `/terms` - Terms of Service
-- `/contact` - Contact form
+Username: your admin username
+Password: `yourpassword` + `ADMIN_SECRET`
 
 ## Environment Variables
-
-See `DEPLOY.md` for full list.
-
-## Quick Start
-
-See `DEPLOY.md`
+See `.env.example` and `DEPLOY.md`
